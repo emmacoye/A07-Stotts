@@ -3,6 +3,7 @@ fn main() {
     assert_eq!(collatz_length(1), 1, "length of 1 should be 1");
     assert_eq!(collatz_length(6), 9, "length of 6 should be 9");
     assert_eq!(collatz_length(27), 112, "length of 27 should be 112");
+    // extra checks
     assert_eq!(collatz_length(2), 2);
     assert_eq!(collatz_length(3), 8);
     println!("collatz_length checks passed.");
@@ -17,10 +18,14 @@ fn main() {
 fn collatz_length(n: u64) -> u64 {
     fn run(n: u64, steps: u64) -> u64 {
         match n {
+            // if just 1, return the steps (1)
             1 => steps,
-            _ => match n % 2 {
-                0 => run(n / 2, steps + 1),
-                _ => run(3 * n + 1, steps + 1),
+            // all else, check if even or odd
+            _ => match n%2 {
+                // if even, divide by 2
+                0 => run(n/2, steps+1),
+                // if odd, multiply by 3 and add 1
+                _ => run(3*n+1, steps+1),
             },
         }
     }
