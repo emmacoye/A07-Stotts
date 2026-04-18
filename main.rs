@@ -1,3 +1,6 @@
+extern crate tailcall;
+use tailcall::tailcall;
+
 fn main() {
     // Known-answer checks — these will panic if your functions are wrong
     assert_eq!(collatz_length(1), 1, "length of 1 should be 1");
@@ -16,6 +19,7 @@ fn main() {
 }
 
 fn collatz_length(n: u64) -> u64 {
+    #[tailcall]
     fn run(n: u64, steps: u64) -> u64 {
         match n {
             // if just 1, return the steps (1)
@@ -34,5 +38,18 @@ fn collatz_length(n: u64) -> u64 {
 }
 
 fn longest_collatz(limit: u64) -> u64 {
-    todo!()
+    return max_val(limit, 0, 0)
+}
+
+#[tailcall]
+fn max_val(n: u64, best: u64, max_len: u64) -> u64 {
+    if n < 1 {
+        return best;
+    }
+    let length = collatz_length(n);
+    if length > max_len {
+        max_val(n-1, n, length)
+    } else {
+        max_val(n-1, best, max_len)
+    }
 }

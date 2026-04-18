@@ -1,0 +1,11 @@
+[package]
+name = "A07-Stotts"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "A07-Stotts"
+path = "main.rs"
+
+[dependencies]
+tailcall = "1.0.1"
